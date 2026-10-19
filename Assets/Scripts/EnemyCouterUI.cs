@@ -41,7 +41,7 @@ namespace WarriorPlatformer
             if (counterText != null)
 
             {
-                counterText.text = $"Enemies: {current}/{goal}";
+                counterText.text = $"Nhiệm vụ: \nTiêu diệt {goal} kẻ địch({current}/{goal})";
             }
         }
     }
