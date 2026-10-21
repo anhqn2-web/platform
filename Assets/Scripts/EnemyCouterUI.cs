@@ -39,9 +39,15 @@ namespace WarriorPlatformer
         private void UpdateCounterText(int current, int goal)
         {
             if (counterText != null)
-
             {
-                counterText.text = $"Nhiệm vụ: \nTiêu diệt {goal} kẻ địch({current}/{goal})";
+                if (current >= goal)
+                {
+                    counterText.text = "<color=green>Nhiệm vụ: \nHOÀN THÀNH!</color>";
+                }
+                else
+                {
+                    counterText.text = $"Nhiệm vụ: \nTiêu diệt {goal} kẻ địch({current}/{goal})";
+                }
             }
         }
     }
