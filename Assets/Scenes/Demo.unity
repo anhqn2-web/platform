@@ -1750,7 +1750,7 @@ Transform:
   m_GameObject: {fileID: 500869891}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.98, y: -2, z: 0}
+  m_LocalPosition: {x: 21.05, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2992,7 +2992,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetGameObjectName: Tower_End
   portalSprite: {fileID: 21300000, guid: a4234359f0a33104292c7239a9edd4aa, type: 3}
-  guidanceSprite: {fileID: 21300000, guid: 1b0aef16f430bd54b819d551453bcac9, type: 3}
+  guidanceSprite: {fileID: 691386244, guid: 632f407bb0bdc7443930926529269346, type: 3}
   portalMaterial: {fileID: 0}
 --- !u!4 &1367139906
 Transform:
@@ -3233,7 +3233,7 @@ Transform:
   m_GameObject: {fileID: 1509169489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.98, y: -2, z: 0}
+  m_LocalPosition: {x: 16.97, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3381,9 +3381,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 90466716}
     m_Modifications:
+    - target: {fileID: 1133187535632817919, guid: 6a706378aa9b3d346b08fc482501a3f0, type: 3}
+      propertyPath: enemyPrefab
+      value: 
+      objectReference: {fileID: 149954983652433165, guid: 888a74e5760eb3147a8f77a2e6dacb61, type: 3}
+    - target: {fileID: 1133187535632817919, guid: 6a706378aa9b3d346b08fc482501a3f0, type: 3}
+      propertyPath: maxActiveEnemies
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1144280027173963533, guid: 6a706378aa9b3d346b08fc482501a3f0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 32
+      value: 32.04
       objectReference: {fileID: 0}
     - target: {fileID: 1144280027173963533, guid: 6a706378aa9b3d346b08fc482501a3f0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13389,7 +13397,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 115080644402142728, guid: 54fe31f0556a57c46b370186c5f7dad5, type: 3}
       propertyPath: enemiesToDefeatGoal
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 660020598619445456, guid: 54fe31f0556a57c46b370186c5f7dad5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13503,6 +13511,10 @@ PrefabInstance:
     - target: {fileID: 6145495651900526538, guid: a201b0a69830c0449873952e18cdc0f0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936142901962209808, guid: a201b0a69830c0449873952e18cdc0f0, type: 3}
+      propertyPath: jumpForce
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

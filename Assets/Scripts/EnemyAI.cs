@@ -12,6 +12,10 @@ namespace WarriorPlatformer
         [SerializeField] protected float currentHealth;
         [SerializeField] protected float moveSpeed = 3f;
 
+        public float MaxHealth => maxHealth;
+        public float CurrentHealth => currentHealth;
+        public bool IsDead => isDead;
+
         [Header("AI Senses")]
         [Tooltip("The range at which the enemy detects the player and starts chasing.")]
         [SerializeField] protected float detectionRadius = 6f;
@@ -32,7 +36,7 @@ namespace WarriorPlatformer
         [Tooltip("Height of the floating health bar.")]
         [SerializeField] protected float healthBarHeight = 0.15f;
 
-        // Components (Dùng protected để lớp con Kế thừa truy cập)
+        // Components
         protected Rigidbody2D rb;
         protected SpriteRenderer spriteRenderer;
         protected Animator animator;
@@ -281,34 +285,37 @@ namespace WarriorPlatformer
 
         protected void CreateFloatingHealthBar()
         {
+            // 1. Tạo Canvas World Space
             healthBarCanvasObj = new GameObject("FloatingHealthBarCanvas", typeof(Canvas));
             Canvas canvas = healthBarCanvasObj.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.WorldSpace;
+            canvas.sortingOrder = 10;
             
             healthBarCanvasObj.transform.SetParent(null);
             healthBarCanvasObj.transform.localScale = Vector3.one;
 
+            // 2. Khung nền màu xám
             GameObject bgObj = new GameObject("Background", typeof(Image));
-            bgObj.transform.SetParent(healthBarCanvasObj.transform);
+            bgObj.transform.SetParent(healthBarCanvasObj.transform, false);
             RectTransform bgRect = bgObj.GetComponent<RectTransform>();
             bgRect.sizeDelta = new Vector2(healthBarWidth, healthBarHeight);
             bgRect.localPosition = Vector3.zero;
-            bgRect.localScale = Vector3.one;
             bgObj.GetComponent<Image>().color = new Color(0.1f, 0.1f, 0.1f, 0.8f);
 
+            // 3. Thanh máu màu đỏ
             healthBarFillObj = new GameObject("Fill", typeof(Image));
-            healthBarFillObj.transform.SetParent(healthBarCanvasObj.transform);
-            RectTransform fillRect = healthBarFillObj.GetComponent<RectTransform>();
-            fillRect.sizeDelta = new Vector2(healthBarWidth - 0.04f, healthBarHeight - 0.04f);
-            fillRect.localPosition = new Vector3(0f, 0f, -0.1f);
-            fillRect.localScale = Vector3.one;
+            healthBarFillObj.transform.SetParent(bgObj.transform, false);
             
-            fillRect.anchorMin = new Vector2(0f, 0.5f);
-            fillRect.anchorMax = new Vector2(0f, 0.5f);
+            RectTransform fillRect = healthBarFillObj.GetComponent<RectTransform>();
+            // Đặt Neo (Anchor) phủ kín và Tâm (Pivot) ở mép trái (0, 0.5)
+            fillRect.anchorMin = new Vector2(0f, 0f);
+            fillRect.anchorMax = new Vector2(1f, 1f);
             fillRect.pivot = new Vector2(0f, 0.5f);
-            fillRect.anchoredPosition3D = new Vector3(-healthBarWidth / 2f + 0.02f, 0f, -0.1f);
+            fillRect.sizeDelta = Vector2.zero;
+            fillRect.anchoredPosition = Vector2.zero;
 
-            healthBarFillObj.GetComponent<Image>().color = new Color(0.85f, 0.15f, 0.15f, 1f);
+            Image fillImage = healthBarFillObj.GetComponent<Image>();
+            fillImage.color = new Color(0.85f, 0.15f, 0.15f, 1f);
 
             healthBarCanvasObj.SetActive(false);
         }
@@ -317,7 +324,7 @@ namespace WarriorPlatformer
         {
             if (isDead || healthBarCanvasObj == null) return;
 
-            float healthPercentage = currentHealth / maxHealth;
+            float healthPercentage = Mathf.Clamp01(currentHealth / maxHealth);
 
             if (healthPercentage < 1f)
             {
@@ -325,8 +332,8 @@ namespace WarriorPlatformer
 
                 if (healthBarFillObj != null)
                 {
-                    RectTransform fillRect = healthBarFillObj.GetComponent<RectTransform>();
-                    fillRect.localScale = new Vector3(healthPercentage, 1f, 1f);
+                    // Co rút chiều ngang (Scale X) theo tỉ lệ % máu còn lại
+                    healthBarFillObj.transform.localScale = new Vector3(healthPercentage, 1f, 1f);
                 }
             }
             else
